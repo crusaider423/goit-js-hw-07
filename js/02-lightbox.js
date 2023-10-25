@@ -27,9 +27,12 @@ function markupGallery(gallery) {
 
 function handelClickOnImage(e) {
   e.preventDefault();
-  if (e.currentTarget === e.target) {
+  if (e.target.nodeName !=='A') {
     return;
   }
 
-  lightbox.open();
+   lightbox.open()
+ 
+
+  
 }
