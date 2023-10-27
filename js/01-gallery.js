@@ -5,9 +5,7 @@ console.log(galleryItems);
 
 const galleryRef = document.querySelector(".gallery");
 galleryRef.addEventListener("click", handelClickOnGalleryLink);
-window.addEventListener("keydown", handelClickOnEscap);
 galleryRef.insertAdjacentHTML("beforeend", markupGallery(galleryItems));
-let modal;
 
 function markupGallery(gallery) {
   return gallery
@@ -32,16 +30,30 @@ function handelClickOnGalleryLink(e) {
     return;
   }
 
-  modal = basicLightbox.create(
-    `
-    <img src="${e.target.dataset.source}" alt="${e.target.alt}" >
-`
-  );
-  modal.show();
+  instance(e);
 }
 
-function handelClickOnEscap(e) {
-  if (e.code === "Escape") {
-    modal.close();
+function instance(e) {
+  const modal = basicLightbox.create(
+    `<img src="${e.target.dataset.source}" alt="${e.target.alt}" ></img>`,
+    {
+      onShow: (modal) => window.addEventListener("keydown", handelClickOnEscap),
+      onClose: (modal) =>
+        window.removeEventListener("keydown", handelClickOnEscap),
+    }
+  );
+  modal.show();
+  function handelClickOnEscap(eve) {
+    if (eve.code === "Escape") {
+      modal.close();
+    }
   }
 }
+
+//  Гляньте цей приклад --------------------------------------------------------------
+
+// modal.show(() =>
+//   window.addEventListener("keydown", (e) => {
+//     if (e.code === "Escape") modal.close();
+//   },{once:true})
+// );

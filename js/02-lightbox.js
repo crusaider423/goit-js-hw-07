@@ -4,8 +4,6 @@ import { galleryItems } from "./gallery-items.js";
 console.log(galleryItems);
 
 const galleryRef = document.querySelector(".gallery");
-
-galleryRef.addEventListener("click", handelClickOnImage);
 galleryRef.insertAdjacentHTML("beforeend", markupGallery(galleryItems));
 
 const lightbox = new SimpleLightbox(".gallery__link", {
@@ -23,16 +21,4 @@ function markupGallery(gallery) {
 </li>`;
     })
     .join("");
-}
-
-function handelClickOnImage(e) {
-  e.preventDefault();
-  if (e.target.nodeName !=='A') {
-    return;
-  }
-
-   lightbox.open()
- 
-
-  
 }
